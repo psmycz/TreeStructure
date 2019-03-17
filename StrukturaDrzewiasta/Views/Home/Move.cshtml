@@ -1,0 +1,59 @@
+﻿@model StrukturaDrzewiasta.ViewModels.CategoryVM
+
+<h1>Move Category</h1>
+<hr />
+
+<div class="col-lg-6" style="float:right">
+    @Html.ViewBag.HtmlString
+    <hr />
+</div>
+
+<div class="col-lg-4" style="float:left">
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.Label("Category Name", new { @class = "col-md-5 control-label" })
+        @Html.DropDownListFor(m => m.CurrentCategoryId, Model.ParentArtibutes, "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CurrentCategoryId, "", new { @class = "text-danger" })
+    </div>
+        <div class="form-group">
+            @Html.Label("Destination", new { @class = "col-md-5 control-label" })
+            @Html.DropDownListFor(m => m.ParentId, Model.ParentArtibutes, "", new { @class = "form-control" })
+        </div>
+        <input class="btn btn-primary btn-lg btn-block" type="submit" name="move" value="Move" />
+        <hr />
+    }
+
+    @Html.ActionLink("Cancel", "Index", "Home")
+
+
+</div>
+
+<script>
+    var toggler = document.getElementsByClassName('box');
+    var i;
+
+    for (i = 0; i < toggler.length; i++) {
+        toggler[i].parentElement.querySelector(".nested").classList.toggle("active", true);
+        toggler[i].classList.toggle("check-box", true);
+    }
+</script>
+
+<script type="text/javascript">
+    var button = document.getElementsByName('move');
+
+    button[0].addEventListener('click', function (e) {
+        var form = $(this).closest('form');
+
+        e.preventDefault();
+
+        bootbox.confirm("Are you sure you want move this category?", function (result) {
+            if (result) {
+                form.submit();
+            }
+        })
+    });
+</script>

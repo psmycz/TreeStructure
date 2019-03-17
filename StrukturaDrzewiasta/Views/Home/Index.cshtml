@@ -1,0 +1,146 @@
+﻿@model StrukturaDrzewiasta.ViewModels.CategoryVM
+<h1>@ViewBag.Title</h1>
+<hr />
+<style>
+    ul, #myUL {
+        list-style-type: none;
+    }
+
+    #myUL {
+        margin: 0;
+        padding: 0;
+    }
+
+    .box {
+        cursor: pointer;
+        -webkit-user-select: none; /* Safari 3.1+ */
+        -moz-user-select: none; /* Firefox 2+ */
+        -ms-user-select: none; /* IE 10+ */
+        user-select: none;
+    }
+
+        .box::before {
+            content: "\2610";
+            color: black;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+    .check-box::before {
+        content: "\2611";
+        color: dodgerblue;
+    }
+
+    .nested {
+        display: none;
+    }
+
+    .active {
+        display: block;
+    }
+
+</style>
+
+
+<div class="container">
+    <div class="col-lg-6" style="float:right">
+        <h1>
+            <input id="expand" type="button" class="btn btn-secondary" value="Expand" onclick="doFunction();" />
+            <input id="collapse" type="button" class="btn btn-secondary" value="Collapse" onclick="doFunction();" />
+            @if (User.Identity.IsAuthenticated)
+            {
+                <input id="sort" type="button" class="btn btn-secondary" value="Sort" onclick="doFunction();" />
+            }
+        </h1>
+        <hr />
+        @Html.ViewBag.HtmlString
+        <hr />
+    </div>
+    <div class="col-lg-4" style="float:left">
+        @if (User.Identity.IsAuthenticated)
+        {
+
+            <h1>Functions</h1>
+            <hr />
+
+            @Html.RouteLink("Add Category", new { controller = "Home", action = "Add" }, new { @class = "btn btn-primary btn-lg btn-block" })
+            @Html.RouteLink("Remove Category", new { controller = "Home", action = "Remove" }, new { @class = "btn btn-primary btn-lg btn-block" })
+            @Html.RouteLink("Edit Category", new { controller = "Home", action = "Edit" }, new { @class = "btn btn-primary btn-lg btn-block" })
+            @Html.RouteLink("Move Category", new { controller = "Home", action = "Move" }, new { @class = "btn btn-primary btn-lg btn-block" })
+
+            <hr />
+
+
+
+
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Success!</strong> @TempData["Success"].ToString().
+            </div>
+        }
+    </div>
+</div>
+    
+
+
+
+
+<script>
+    var toggler = document.getElementsByClassName('box');
+    var i;
+
+    for (i = 0; i < toggler.length; i++) {
+        toggler[i].addEventListener("click", function () {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("check-box");
+        });
+    }
+
+</script>
+
+<script>
+    document.getElementById("expand").onclick = function () {
+        var toggler = document.getElementsByClassName('box');
+        var i;
+
+        for (i = 0; i < toggler.length; i++) {
+            toggler[i].parentElement.querySelector(".nested").classList.toggle("active", true);
+            toggler[i].classList.toggle("check-box", true);
+        }
+    };
+</script>
+
+<script>
+    document.getElementById("collapse").onclick = function () {
+        var toggler = document.getElementsByClassName('box');
+        var i;
+
+        for (i = 0; i < toggler.length; i++) {
+            toggler[i].parentElement.querySelector(".nested").classList.toggle("active", false);
+            toggler[i].classList.toggle("check-box", false);
+        }
+    };
+</script>
+
+<script>
+    document.getElementById("sort").onclick = function () {
+        function uCase(elem) {
+            return $.trim($(elem).text().toUpperCase())
+        }
+        function compareFirstLink(a, b) {
+            var A = uCase($(a).first('a')),
+                B = uCase($(b).first('a'));
+            return (A > B) ? 1 : -1;
+        }
+        $(function () {
+            var $sortables = $("ul:has(div:first-child), li:not(.fixedOrder)");
+            $sortables.sort(compareFirstLink).each(function () {
+                this.parentNode.appendChild(this);
+            });
+        });
+    };
+</script>

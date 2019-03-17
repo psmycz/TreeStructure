@@ -1,0 +1,53 @@
+﻿@model StrukturaDrzewiasta.ViewModels.UserVM
+
+<h1>Register</h1>
+<hr />
+
+
+<div class="col-lg-4" style="float:left">
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.Label("*Username", new { @class = "col-md-5 control-label" })
+            @Html.TextBoxFor(u => u.UserName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.Label("FirstName", new { @class = "col-md-5 control-label" })
+            @Html.TextBoxFor(u => u.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(u => u.FirstName, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.Label("LastName", new { @class = "col-md-5 control-label" })
+            @Html.TextBoxFor(u => u.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(u => u.LastName, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.Label("*Email", new { @class = "col-md-5 control-label" })
+            @Html.TextBoxFor(u => u.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(u => u.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.Label("*Password", new { @class = "col-md-5 control-label" })
+            @Html.PasswordFor(u => u.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(u => u.Password, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.Label("*Confirm Password", new { @class = "col-md-6 control-label" })
+            @Html.PasswordFor(u => u.ConfirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(u => u.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+        <div>
+        <label>* required fields</label>
+    </div>
+        <input class="btn btn-primary btn-lg btn-block" type="submit" name="register" value="Register" />
+        <hr />
+    }
+
+    @Html.ActionLink("Cancel", "Index", "Home")
+
+
+</div>
