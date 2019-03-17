@@ -4,8 +4,8 @@ namespace StrukturaDrzewiasta.ViewModels
 {
     public class LoginVM
     {
-        [Required(ErrorMessage = "User Name is required.")]
-        [Display(Name = "User Name")]
+        [Required(ErrorMessage = "Username is required.")]
+        [Display(Name = "Username")]
         public string UserName { get; set; }
         
         [Required(ErrorMessage = "Password is required.")]

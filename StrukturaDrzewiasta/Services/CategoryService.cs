@@ -12,14 +12,14 @@ namespace StrukturaDrzewiasta.Services
         public void AddCategory(string _Name, int _ParentId, UnitOfWork unitOfWork)
         {
             Category newCategory = new Category();
-            if (_ParentId > 0) { 
+            if (_ParentId > 0) {                        // dodawanie do istniejacej kategorii
                 Category parentCategory = unitOfWork.Categories.Get(_ParentId);
 
                 newCategory.Name = _Name;
                 newCategory.ParentCategoryId = parentCategory.Id;
                 newCategory.ParentCategory = parentCategory;
             }
-            else
+            else                                        // dodawanie do pustej
             {
                 newCategory.Name = _Name;
             }
@@ -30,10 +30,21 @@ namespace StrukturaDrzewiasta.Services
         public void RemoveCategory(int CategoryId, UnitOfWork unitOfWork)
         {
             Category category = unitOfWork.Categories.Get(CategoryId);
-            if(category.Subcategories.Count != 0)
-            {
-                unitOfWork.Categories.RemoveRange(category.Subcategories);
+            List<Category> categories = new List<Category>();
+
+            void deleteAll(Category cat) {              // lista podkategorii
+                if (cat.Subcategories.Count != 0)
+                {
+                    foreach (var c in cat.Subcategories)
+                    {
+                        categories.Add(c);
+                        deleteAll(c);
+                    }
+                }
             }
+            deleteAll(category);
+
+            foreach (Category c in categories) unitOfWork.Categories.Remove(c);     // kategorii z podkategoriami
             unitOfWork.Categories.Remove(category);
             unitOfWork.Complete();
         }
@@ -45,11 +56,10 @@ namespace StrukturaDrzewiasta.Services
             unitOfWork.Complete();
         }
 
-        //todo: przesuniecie do pustego miejsca
         public void MoveCategory(int categoryId, int destinationId, UnitOfWork unitOfWork)
         {
             Category current = unitOfWork.Categories.Get(categoryId);
-            if (destinationId != 0)
+            if (destinationId != 0)                                 // przesuwanie do istniejacej kategorii
             {
                 Category destination = unitOfWork.Categories.Get(destinationId);
 
@@ -59,7 +69,7 @@ namespace StrukturaDrzewiasta.Services
                 current.ParentCategoryId = destinationId;
                 destination.Subcategories.Add(current);
             }
-            else
+            else                                                    // przesuwanie do pustej
             {
                 if (current.ParentCategory != null)
                     current.ParentCategory.Subcategories.Remove(current);
@@ -69,7 +79,7 @@ namespace StrukturaDrzewiasta.Services
             unitOfWork.Complete();
         }
 
-        public string PrintStructure(IEnumerable<Category> categories)
+        public string PrintStructure(IEnumerable<Category> categories)      // tworzenie stringa ze struktura
         {
             if (result == "")
                 result += "<ul id='myUL'>";

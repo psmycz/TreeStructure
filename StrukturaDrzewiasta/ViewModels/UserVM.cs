@@ -5,7 +5,7 @@ namespace StrukturaDrzewiasta.ViewModels
     public class UserVM
     {
         [Required]
-        [Display(Name = "User Name")]
+        [Display(Name = "Username")]
         [StringLength(20)]
         public string UserName { get; set; }
 

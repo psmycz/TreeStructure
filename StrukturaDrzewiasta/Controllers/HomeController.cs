@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using StrukturaDrzewiasta.Core.Domain;
 using StrukturaDrzewiasta.Persistance;
 using StrukturaDrzewiasta.Services;
@@ -44,7 +43,7 @@ namespace StrukturaDrzewiasta.Controllers
             {
                 return View("ErrorPage");
             }
-            var allCategories = new CategoryVM();                                       
+            var allCategories = new CategoryVM();             // na potrzeby dropdown list, lista wszystkich kategorii do wyboru                                
             allCategories.ParentArtibutes = new SelectList(unitOfWork.Categories.GetAll(), "Id", "Name");
 
             categories = unitOfWork.Categories.Find(c => c.ParentCategoryId == null);
@@ -57,7 +56,7 @@ namespace StrukturaDrzewiasta.Controllers
         [HttpPost]
         public ActionResult Add(CategoryVM categoryVM)
         {
-            if (!ModelState.IsValidField("Name")) {
+            if (!ModelState.IsValidField("Name")) {         // jesli podano niepoprawne Name
                 categoryVM.ParentArtibutes = new SelectList(unitOfWork.Categories.GetAll(), "Id", "Name");
                 
                 categories = unitOfWork.Categories.Find(c => c.ParentCategoryId == null);
@@ -117,7 +116,7 @@ namespace StrukturaDrzewiasta.Controllers
         [HttpPost]
         public ActionResult Remove(CategoryVM categoryVM)
         {
-            if (categoryVM.ParentId == 0)
+            if (categoryVM.ParentId == 0)       // jesli pole wyboru "do usuniecia" jest puste
             {
                 if (!ModelState.IsValid)
                 {
@@ -219,7 +218,7 @@ namespace StrukturaDrzewiasta.Controllers
         [HttpPost]
         public ActionResult Move(CategoryVM categoryVM)
         {
-            if (!ModelState.IsValidField("CurrentCategoryId"))
+            if (!ModelState.IsValidField("CurrentCategoryId"))          // jesli nie wybrano katalogu do przesuniecia
             {
                 categoryVM.ParentArtibutes = new SelectList(unitOfWork.Categories.GetAll(), "Id", "Name");
 
@@ -229,7 +228,7 @@ namespace StrukturaDrzewiasta.Controllers
 
                 return View(categoryVM);
             }
-            else
+            else                                                        // jesli wybrano katalog
             {
                 Category destinationCat = unitOfWork.Categories.Get(categoryVM.ParentId);
                 Category currentCat = unitOfWork.Categories.Get(categoryVM.CurrentCategoryId);
@@ -248,7 +247,7 @@ namespace StrukturaDrzewiasta.Controllers
                     }
                 }
                 find(currentCat);
-                if (flag)
+                if (flag)                               // jesli katalog docelowy jest taki sam lub jest dzieckiem aktualnego katalogu
                 {
                     categoryVM.ParentArtibutes = new SelectList(unitOfWork.Categories.GetAll(), "Id", "Name");
 

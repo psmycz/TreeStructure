@@ -2,7 +2,7 @@
 //{
 //    using System;
 //    using System.Data.Entity.Migrations;
-    
+
 //    public partial class Ver2 : DbMigration
 //    {
 //        public override void Up()
@@ -21,57 +21,57 @@
 //            DropTable("dbo.Tags");
 //            DropTable("dbo.CourseTags");
 //        }
-        
+
 //        public override void Down()
 //        {
 //            CreateTable(
 //                "dbo.CourseTags",
 //                c => new
-//                    {
-//                        CourseId = c.Int(nullable: false),
-//                        TagId = c.Int(nullable: false),
-//                    })
+//                {
+//                    CourseId = c.Int(nullable: false),
+//                    TagId = c.Int(nullable: false),
+//                })
 //                .PrimaryKey(t => new { t.CourseId, t.TagId });
-            
+
 //            CreateTable(
 //                "dbo.Tags",
 //                c => new
-//                    {
-//                        Id = c.Int(nullable: false, identity: true),
-//                        Name = c.String(),
-//                    })
+//                {
+//                    Id = c.Int(nullable: false, identity: true),
+//                    Name = c.String(),
+//                })
 //                .PrimaryKey(t => t.Id);
-            
+
 //            CreateTable(
 //                "dbo.Covers",
 //                c => new
-//                    {
-//                        Id = c.Int(nullable: false),
-//                    })
+//                {
+//                    Id = c.Int(nullable: false),
+//                })
 //                .PrimaryKey(t => t.Id);
-            
+
 //            CreateTable(
 //                "dbo.Courses",
 //                c => new
-//                    {
-//                        Id = c.Int(nullable: false, identity: true),
-//                        Name = c.String(nullable: false, maxLength: 255),
-//                        Description = c.String(nullable: false, maxLength: 2000),
-//                        Level = c.Int(nullable: false),
-//                        FullPrice = c.Single(nullable: false),
-//                        AuthorId = c.Int(nullable: false),
-//                    })
+//                {
+//                    Id = c.Int(nullable: false, identity: true),
+//                    Name = c.String(nullable: false, maxLength: 255),
+//                    Description = c.String(nullable: false, maxLength: 2000),
+//                    Level = c.Int(nullable: false),
+//                    FullPrice = c.Single(nullable: false),
+//                    AuthorId = c.Int(nullable: false),
+//                })
 //                .PrimaryKey(t => t.Id);
-            
+
 //            CreateTable(
 //                "dbo.Authors",
 //                c => new
-//                    {
-//                        Id = c.Int(nullable: false, identity: true),
-//                        Name = c.String(),
-//                    })
+//                {
+//                    Id = c.Int(nullable: false, identity: true),
+//                    Name = c.String(),
+//                })
 //                .PrimaryKey(t => t.Id);
-            
+
 //            CreateIndex("dbo.CourseTags", "TagId");
 //            CreateIndex("dbo.CourseTags", "CourseId");
 //            CreateIndex("dbo.Covers", "Id");

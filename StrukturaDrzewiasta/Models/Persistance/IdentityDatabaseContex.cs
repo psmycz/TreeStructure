@@ -3,15 +3,13 @@ using Microsoft.AspNet.Identity;
 using StrukturaDrzewiasta.Core.Domain;
 using System.Data.Entity;
 
-
 namespace StrukturaDrzewiasta.Persistance
 {
-
     public class IdentityDatabaseContext : IdentityDbContext<User>
     {
 
         public IdentityDatabaseContext()
-            : base("name=DatabaseContex")
+            : base("name=DatabaseContext")
         {
         }
   
@@ -26,7 +24,6 @@ namespace StrukturaDrzewiasta.Persistance
         }
     }
 
-    //klasa incjalizacyjna dla IdentityDatabaseContext
     public class IdentityDbInit : DropCreateDatabaseIfModelChanges<IdentityDatabaseContext>
     {
 
@@ -36,12 +33,11 @@ namespace StrukturaDrzewiasta.Persistance
             base.Seed(context);
         }
 
-        //stworzenie jednego użytkownika, który będzie w bazie "na start"
         public void AddDefaultUser(IdentityDatabaseContext context)
         {
             AccountManager account = new AccountManager(new UserStore<User>(context));
             string userName = "admin";
-            string password = "admin";
+            string password = "Admin1";
             string email = "admin@admin.com";
             User user = account.FindByName(userName);
             if (user == null)

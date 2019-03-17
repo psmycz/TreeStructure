@@ -10,13 +10,13 @@ namespace StrukturaDrzewiasta.App_Start
     {
         public void Configuration(IAppBuilder app)
         {
-            //konfiguracja identyfikacji
+
             app.CreatePerOwinContext<IdentityDatabaseContext>(IdentityDatabaseContext.Create);
             app.CreatePerOwinContext<AccountManager>(AccountManager.Create);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                //ścieżka do logowania
+
                 LoginPath = new PathString("/Home/Login"),
             });
         }
