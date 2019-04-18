@@ -65,6 +65,7 @@ namespace StrukturaDrzewiasta.Controllers
 
                 return View(categoryVM);
             }
+            // todo: przerobic z uzyciem catalogservice
             else  // sprawdza czy wystapila juz taka nazwa bez uwzgledniania wielkosci liter
             {
                 IEnumerable<Category> all = unitOfWork.Categories.GetAll();

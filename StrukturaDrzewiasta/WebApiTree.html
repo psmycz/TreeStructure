@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-3.0.0.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var ulCategory = $('#ulCategory');
+            $('#btn').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "api/category/",
+                    dataType: 'json',
+                    success: function (data) {
+                        ulCategory.empty();
+                        var jsondata = new Array;
+                        $.each(data, function (index, val) {
+                            if (!val.ParentCategoryId > 0)
+                                jsondata.push({ "id": val.Id, "text": val.Name, "parent": "#" });
+                            if (val.ParentCategoryId > 0)
+                                jsondata.push({ "id": val.Id, "text": val.Name, "parent": val.ParentCategoryId });
+
+                            var name = val.Name + " Id: " + val.Id + " ParentCategoryId " + val.ParentCategoryId;
+                            ulCategory.append('<li>' + name + '</li>');
+
+                        });
+                        createJSTree(jsondata);
+                    }
+                });
+
+                function createJSTree(jsondata) {
+                    $('#jstree').jstree({
+                        'core': {
+                            'data': jsondata
+                        }
+                    });
+                }
+
+            });
+            $('#btnClear').click(function () {
+                ulCategory.empty();
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div>
+        <input id="btn" type="button" value="Get All Categories" />
+        <input id="btnClear" type="button" value="Clear" />
+        <ul id="ulCategory" />
+    </div>
+
+    <div id="jstree"></div>
+
+</body>
+
+</html>

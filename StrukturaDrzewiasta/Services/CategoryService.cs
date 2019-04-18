@@ -79,6 +79,8 @@ namespace StrukturaDrzewiasta.Services
             unitOfWork.Complete();
         }
 
+
+        //TODO: przerobic z uzyciem string buildera
         public string PrintStructure(IEnumerable<Category> categories)      // tworzenie stringa ze struktura
         {
             if (result == "")
@@ -99,6 +101,27 @@ namespace StrukturaDrzewiasta.Services
             return result;
         }
 
+        public static bool isNameDuplicated(string Name, UnitOfWork unitOfWork)
+        {
+            IEnumerable<Category> all = unitOfWork.Categories.GetAll();
+            foreach (var cat in all)
+            {
+                if (Name.ToLower() == cat.Name.ToLower())
+                    return true;
+            }
+            return false;
+        }
+
+        public static bool idExist(int Id, UnitOfWork unitOfWork)
+        {
+            IEnumerable<Category> all = unitOfWork.Categories.GetAll();
+            foreach (var cat in all)
+            {
+                if (Id == cat.Id)
+                    return true;
+            }
+            return false;
+        }
 
     }
 }
