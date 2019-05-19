@@ -9,3 +9,22 @@ Simple application that creates catalog tree structure with working CRUD operati
 - ~/api/category/id
 - ~/WebApiTree.html
 
+ Założenia co do technologii:
+
+- baza danych MSSQL, PostgreSQL 9.3 / MySql 5.4 lub nowsza,
+- ASP.NET MVC (Uwaga nie należy używać gotowej kontrolki),
+- HTML 5, CSS
+
+Założenia dotyczące realizacji zadania:
+
+- struktura drzewiasta ma umożliwiać działanie na dowolnej ilości poziomów,
+- funkcje jakie mają być dostępne dla administratora: dodawanie, edycja, usuwania, sortowanie (zarówno węzłów jak i liści), przenoszenie węzłów do innych gałęzi,
+- powinna być możliwość rozwinięcia całej struktury lub wybranych węzłów,
+- powinny zostać zastosowane zabezpieczenia uniemożliwiające wprowadzanie nieprawidłowych danych.
+- mile widziane zastosowanie skryptów client-side,
+- w bazie danych mile widziane funkcje/procedury składowe
+
+Dane do logowania:
+
+- login: admin
+- haslo: Admin1
